@@ -6,7 +6,7 @@ import java.util.Properties;
  *
  * @author santos
  */
-class LoginDB {
+public class LoginDB {
     private final String dbUrl;
     private String user;
     private String password;
@@ -27,12 +27,12 @@ class LoginDB {
 
     public void setPassword(String password) {
         this.password = password;
-    }    
+    }
     
     public Properties getProperties() {
         Properties properties = new Properties();
-        properties.setProperty("user", user);
-        properties.setProperty("password", password);
+        properties.put("user", user);
+        properties.put("password", password);
         return properties;
     }
 }
