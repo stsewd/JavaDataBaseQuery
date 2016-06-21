@@ -3,6 +3,7 @@ package edu.ucue.databasequery.db;
 import edu.ucue.databasequery.db.exceptions.QueryException;
 import edu.ucue.databasequery.db.exceptions.CloseConnectionException;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -24,6 +25,30 @@ public class DataBase {
             query = Query.insert(o);
             stmt = connection.createStatement();
             stmt.executeUpdate(query);
+        } catch (SQLException ex) {
+            throw new QueryException(query);
+        } finally {
+            closeConnection(stmt);
+        }
+    }
+    
+    public ResultSet consult(String query) {
+        Statement stmt = null;
+        try {
+            stmt = connection.createStatement();
+            return stmt.executeQuery(query);
+        } catch (SQLException ex) {
+            throw new QueryException(query);
+        } finally {
+            closeConnection(stmt);
+        }
+    }
+    
+    public void query(String query) {
+        Statement stmt = null;
+        try {
+            stmt = connection.createStatement();
+            stmt.execute(query);
         } catch (SQLException ex) {
             throw new QueryException(query);
         } finally {
