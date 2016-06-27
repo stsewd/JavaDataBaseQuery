@@ -98,4 +98,19 @@ public class Query {
             condition.add(field.getName() + "=" + "'" + field.getValue() + "'");
         return condition.toString();
     }
+
+    static String update(String tableName, ArrayList<DBField> previewfields, ArrayList<DBField> newFields) {
+        String query;
+        query = "UPDATE" + " " + tableName + " " +
+                "SET" + " " + getSet(newFields) + " " +
+                "WHERE" + " " + getCondition(previewfields);
+        return query;
+    }
+
+    private static String getSet(ArrayList<DBField> fields) {
+        StringJoiner condition = new StringJoiner(", ");
+        for (DBField field : fields)
+            condition.add(field.getName() + "=" + "'" + field.getValue() + "'");
+        return condition.toString();
+    }
 }

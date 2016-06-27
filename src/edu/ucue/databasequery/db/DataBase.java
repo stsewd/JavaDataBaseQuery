@@ -37,10 +37,20 @@ public class DataBase {
     }
     
     public void addElement(String tableName, Map<String, String> fields) {
+        String query;
+        query = Query.insert(tableName, fields);
+        update(query);
+    }
+    
+    public void updateElement(String tableName, ArrayList<DBField> previewFields, ArrayList<DBField> newFields) {
+        String query;
+        query = Query.update(tableName, previewFields, newFields);
+        update(query);
+    }
+    
+    private void update(String query) {
         Statement stmt = null;
-        String query = null;
         try {
-            query = Query.insert(tableName, fields);
             stmt = connection.createStatement();
             stmt.executeUpdate(query);
         } catch (SQLException ex) {
@@ -115,24 +125,12 @@ public class DataBase {
         }
     }
     
-    public void update(String query) {
-        Statement stmt = null;
-        try {
-            stmt = connection.createStatement();
-            stmt.executeUpdate(query);
-        } catch (SQLException ex) {
-            throw new QueryException(query, ex);
-        } finally {
-            closeConnection(stmt);
-        }
-    }
-    
     public void delete(String tableName, ArrayList<DBField> fields) {
         String query = Query.delete(tableName, fields);
         query(query);
     }
     
-    public void query(String query) {
+    private void query(String query) {
         Statement stmt = null;
         try {
             stmt = connection.createStatement();
