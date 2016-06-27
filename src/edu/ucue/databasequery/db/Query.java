@@ -1,5 +1,6 @@
 package edu.ucue.databasequery.db;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -45,5 +46,56 @@ public class Query {
             // Todo esta bien
         }
         return values;
+    }
+
+    public static String insert(String tableName, Map<String, String> fieldsMap) {
+        StringJoiner fields = new StringJoiner(",");
+        StringJoiner values = new StringJoiner(",");
+        for (Entry<String, String> entry : fieldsMap.entrySet()) {
+            if (!entry.getValue().isEmpty()) {
+                fields.add(entry.getKey());
+                values.add("'" + entry.getValue() + "'");
+            }
+        }
+        String query;
+        query = "INSERT INTO " + tableName + " " +
+                "(" + fields.toString() + ")" + " " +
+                "VALUES(" + values.toString() + ")";
+        return query;
+    }
+
+    static String selectAll(String tableName) {
+        String query;
+        query = "SELECT * FROM " + tableName;
+        return query;
+    }
+
+    public static String delete(String tableName, ArrayList<DBField> fields) {
+        String query;
+        query = "DELETE FROM" + " " + tableName + " " +
+                "WHERE" + " " + getCondition(fields); 
+        return query;
+    }
+
+    static String allFields(String tableName) {
+        String query;
+        query = "SELECT" + " " + "COLUMN_NAME" + " " +
+                "FROM" + " " + "USER_TAB_COLUMNS" + " " +
+                "WHERE" + " " + "TABLE_NAME" + "=" + "'" + tableName + "'";
+        return query;
+    }
+
+    static String allTableNames() {
+        String query;
+        query = "SELECT" + " " + "TABLE_NAME" + " " +
+                "FROM" + " " + "USER_TABLES";
+        return query;
+    }
+
+    private static String getCondition(ArrayList<DBField> fields) {
+        StringJoiner condition = new StringJoiner(" AND ");
+        for (DBField field : fields)
+            condition.add(field.getName() + "=" + "'" + field.getValue() + "'");
+        return condition.toString();
     }
 }

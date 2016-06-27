@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class QueryException extends RuntimeException {
     private final SQLException ex;
     public QueryException(String query, SQLException ex) {
-        super("Error al ejecutar la consulta: " + query);
+        super("Error al ejecutar la consulta: " + query + ". " + ex.getMessage());
         this.ex = ex;
     }
 
