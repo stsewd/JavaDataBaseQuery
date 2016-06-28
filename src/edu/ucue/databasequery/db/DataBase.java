@@ -59,7 +59,42 @@ public class DataBase {
             closeConnection(stmt);
         }
     }
-       
+    
+    public double functionSum(String tableName, String colName) {
+        String query = Query.functionSum(tableName, colName);
+        ArrayList<ArrayList<String>> result = consultWithoutHeader(query);
+        double sum = Double.parseDouble(result.get(0).get(0));
+        return sum;
+    }
+    
+    public double functionAverage(String tableName, String colName) {
+        String query = Query.functionAverage(tableName, colName);
+        ArrayList<ArrayList<String>> result = consultWithoutHeader(query);
+        double average = Double.parseDouble(result.get(0).get(0));
+        return average;
+    }
+    
+    public double functionMax(String tableName, String colName) {
+        String query = Query.functionMax(tableName, colName);
+        ArrayList<ArrayList<String>> result = consultWithoutHeader(query);
+        double max = Double.parseDouble(result.get(0).get(0));
+        return max;
+    }
+    
+    public double functionMin(String tableName, String colName) {
+        String query = Query.functionMin(tableName, colName);
+        ArrayList<ArrayList<String>> result = consultWithoutHeader(query);
+        double min = Double.parseDouble(result.get(0).get(0));
+        return min;
+    }
+    
+    public int functionCount(String tableName, String colName) {
+        String query = Query.functionCount(tableName, colName);
+        ArrayList<ArrayList<String>> result = consultWithoutHeader(query);
+        int count = Integer.parseInt(result.get(0).get(0));
+        return count;
+    }
+    
     public ArrayList<ArrayList<String>> consult(String query) {
         Statement stmt = null;
         ArrayList<ArrayList<String>> datos = new ArrayList<>();
@@ -158,6 +193,13 @@ public class DataBase {
         for (ArrayList<String> a : result)
             fields.add(a.get(0));
         return fields;
+    }
+    
+    public ArrayList<ArrayList<String>> search(String tableName, String subString) {
+        ArrayList<String> fields = getFields(tableName);
+        String query = Query.search(tableName, fields, subString);
+        ArrayList<ArrayList<String>> result = this.consult(query);
+        return result;
     }
 
     private void closeConnection(Statement stmt) {

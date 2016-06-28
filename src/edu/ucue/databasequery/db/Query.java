@@ -113,4 +113,46 @@ public class Query {
             condition.add(field.getName() + "=" + "'" + field.getValue() + "'");
         return condition.toString();
     }
+    
+    public static String functionSum(String tableName, String colName) {
+        return function("SUM", tableName, colName);
+    }
+    
+    public static String functionAverage(String tableName, String colName) {
+        return function("AVG", tableName, colName);
+    }
+    
+    public static String functionMax(String tableName, String colName) {
+        return function("MAX", tableName, colName);
+    }
+    
+    public static String functionMin(String tableName, String colName) {
+        return function("MIN", tableName, colName);
+    }
+    
+    public static String functionCount(String tableName, String colName) {
+        return function("COUNT", tableName, colName);
+    }
+    
+    private static String function(String functionName, String tableName, String colName) {
+        String query;
+        query = "SELECT" + " " +
+                functionName + "(" + colName + ")" +
+                "FROM" + " " + tableName;
+        return query;
+    }
+    
+    public static String search(String tableName, ArrayList<String> cols, String subString) {
+        String query;
+        StringJoiner search = new StringJoiner(" or ");
+        for (String col : cols)
+            search.add("UPPER" + " " + "(" + col + ")" + " " +
+                    "LIKE" + " " + "'" + "%" +
+                    subString.toUpperCase() + "%" + "'"
+            );
+        query = "SELECT" + " " + "*" + " " +
+                "FROM" + " " + tableName + " " +
+                "WHERE" + " " + search.toString();
+        return query;
+    } 
 }
