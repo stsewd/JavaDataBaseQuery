@@ -60,39 +60,34 @@ public class DataBase {
         }
     }
     
-    public double functionSum(String tableName, String colName) {
+    public ArrayList<ArrayList<String>> functionSum(String tableName, String colName) {
         String query = Query.functionSum(tableName, colName);
-        ArrayList<ArrayList<String>> result = consultWithoutHeader(query);
-        double sum = Double.parseDouble(result.get(0).get(0));
-        return sum;
+        ArrayList<ArrayList<String>> result = consult(query);
+        return result;
     }
     
-    public double functionAverage(String tableName, String colName) {
+    public ArrayList<ArrayList<String>> functionAverage(String tableName, String colName) {
         String query = Query.functionAverage(tableName, colName);
-        ArrayList<ArrayList<String>> result = consultWithoutHeader(query);
-        double average = Double.parseDouble(result.get(0).get(0));
-        return average;
+        ArrayList<ArrayList<String>> result = consult(query);
+        return result;
     }
     
-    public double functionMax(String tableName, String colName) {
+    public ArrayList<ArrayList<String>> functionMax(String tableName, String colName) {
         String query = Query.functionMax(tableName, colName);
-        ArrayList<ArrayList<String>> result = consultWithoutHeader(query);
-        double max = Double.parseDouble(result.get(0).get(0));
-        return max;
+        ArrayList<ArrayList<String>> result = consult(query);
+        return result;
     }
     
-    public double functionMin(String tableName, String colName) {
+    public ArrayList<ArrayList<String>> functionMin(String tableName, String colName) {
         String query = Query.functionMin(tableName, colName);
-        ArrayList<ArrayList<String>> result = consultWithoutHeader(query);
-        double min = Double.parseDouble(result.get(0).get(0));
-        return min;
+        ArrayList<ArrayList<String>> result = consult(query);
+        return result;
     }
     
-    public int functionCount(String tableName, String colName) {
+    public ArrayList<ArrayList<String>> functionCount(String tableName, String colName) {
         String query = Query.functionCount(tableName, colName);
-        ArrayList<ArrayList<String>> result = consultWithoutHeader(query);
-        int count = Integer.parseInt(result.get(0).get(0));
-        return count;
+        ArrayList<ArrayList<String>> result = consult(query);
+        return result;
     }
     
     public ArrayList<ArrayList<String>> consult(String query) {
@@ -209,5 +204,29 @@ public class DataBase {
         } catch (SQLException ex) {
             throw new CloseConnectionException();
         }
+    }
+
+    public ArrayList<ArrayList<String>> lessThan(String tableName, String colName, String value) {
+        String query = Query.lessThan(tableName, colName, value);
+        ArrayList<ArrayList<String>> result = consult(query);
+        return result;
+    }
+
+    public ArrayList<ArrayList<String>> greaterThan(String tableName, String colName, String value) {
+        String query = Query.greaterThan(tableName, colName, value);
+        ArrayList<ArrayList<String>> result = consult(query);
+        return result;
+    }
+
+    public ArrayList<ArrayList<String>> equalTo(String tableName, String colName, String value) {
+        String query = Query.equalTo(tableName, colName, value);
+        ArrayList<ArrayList<String>> result = consult(query);
+        return result;
+    }
+
+    public ArrayList<ArrayList<String>> unequalTo(String tableName, String colName, String value) {
+        String query = Query.unequealTo(tableName, colName, value);
+        ArrayList<ArrayList<String>> result = consult(query);
+        return result;
     }
 }

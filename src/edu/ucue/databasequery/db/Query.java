@@ -155,4 +155,36 @@ public class Query {
                 "WHERE" + " " + search.toString();
         return query;
     } 
+
+    static String lessThan(String tableName, String colName, String value) {
+        String query;
+        query = getCondition(tableName, colName, value, "<");
+        return query;                
+    }
+
+    static String greaterThan(String tableName, String colName, String value) {
+        String query;
+        query = getCondition(tableName, colName, value, ">");
+        return query;                
+    }
+
+    static String equalTo(String tableName, String colName, String value) {
+        String query;
+        query = getCondition(tableName, colName, value, "=");
+        return query;                
+    }
+
+    static String unequealTo(String tableName, String colName, String value) {
+        String query;
+        query = getCondition(tableName, colName, value, "<>");
+        return query;
+    }
+
+    private static String getCondition(String tableName, String colName, String value, String operator) {
+        String query;
+        query = "SELECT" + " " + "*" + " " +
+                "FROM" + " " + tableName + " " +
+                "WHERE" + " " + colName + operator + "'" + value + "'";
+        return query;
+    }
 }
